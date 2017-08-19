@@ -11,6 +11,11 @@ input.ng-invalid.ng-touched {
   border: 1px solid red;
 }
 
+/* style for pending asynchronous validation */
+input.ng-pending {
+  border: dashed 3px orange;
+}
+
 #requiredField  {
   font-weight: bold !important;
   color: red !important;

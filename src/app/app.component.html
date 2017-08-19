@@ -22,7 +22,13 @@
                 <span
                   class="help-block error"
                   *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched">
-                    Please enter a valid user name.</span>
+                  <span *ngIf="signupForm.get('userData.username').errors['nameIsForbidden']">
+                    Username is invalid.
+                  </span>
+                  <span *ngIf="signupForm.get('userData.username').errors['required']">
+                    Username is required.
+                  </span>
+                </span>
               </div>
               <div class="form-group">
                 <label for="email"
@@ -35,7 +41,19 @@
                 <span
                   class="help-block error"
                   *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched">
-                    Please enter a valid user name.</span>
+                  <!-- Adding has error to check for the existance to error. -->
+                  <span *ngIf="signupForm.get('userData.email').hasError('emailIsForbidden') && signupForm.get('userData.email').errors['emailIsForbidden']">
+                    Email is forbidden.
+                  </span>
+                  <!-- Adding has error to check for the existance to error. -->
+                  <span *ngIf="signupForm.get('userData.email').hasError('email') && signupForm.get('userData.email').errors['email']">
+                    email is invalid.
+                  </span>
+                  <!-- Adding has error to check for the existance to error. -->
+                  <span *ngIf="signupForm.get('userData.email').hasError('required') && signupForm.get('userData.email').errors['required']">
+                    email is required.
+                  </span>
+                </span>
               </div>
         </div>
         <div class="radio" *ngFor="let gender of genders">
@@ -55,7 +73,7 @@
             type="button"
             (click)="onAddHobby()">
             Add Hobby</button>
-          <br>
+          <br><br>
           <div class="form-group"
             *ngFor="let hobbieControl of signupForm.get('hobbies').controls; let i = index">
             <!-- specify the formControlName in this case we use propery binding to bind the index, which will be the formControlName -->
@@ -64,8 +82,7 @@
         </div>
         <button
           class="btn btn-primary"
-          type="submit"
-          [disabled]="!signupForm.valid">
+          type="submit">
             Submit</button>
       </form>
     </div>
