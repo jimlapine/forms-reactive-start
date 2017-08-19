@@ -9,8 +9,9 @@
           formGroupName="userData">
             <div class="form-group">
                 <!-- Update to use path instead of control name, see nested control on TypeScript -->
-                <app-required-field [formField]="signupForm.get('userData.username')">/</app-required-field>
-                <label for="username">Username</label>
+                <!-- <app-required-field [formField]="signupForm.get('userData.username')">/</app-required-field> -->
+                <label for="username"
+                  appRequiredField>Username</label>
                 <!-- We also need to tell Angular which of our TypeScript form controls map to our HTML controls via formControlName -->
                 <input
                   type="text"
@@ -24,8 +25,8 @@
                     Please enter a valid user name.</span>
               </div>
               <div class="form-group">
-                <app-required-field [formField]="signupForm.get('userData.email')">/</app-required-field>
-                <label for="email">email</label>
+                <label for="email"
+                  appRequiredField>email</label>
                 <input
                   type="text"
                   id="email"
@@ -45,14 +46,22 @@
               [value]="gender">{{ gender }}
           </label>
         </div>
-        <!-- <span
-          class="help-block error"
-          *ngIf="!signupForm.valid && signupForm.touched">
-          Please enter required fields.</span> -->
-        <!-- <button
-          class="btn btn-primary"
-          type="submit">
-            Submit</button> -->
+        <!-- Specify that this div maps to our hobbie form array -->
+        <div
+          formArrayName="hobbies">
+          <h4>Your Hobbies</h4>
+          <button
+            class="btn btn-default"
+            type="button"
+            (click)="onAddHobby()">
+            Add Hobby</button>
+          <br>
+          <div class="form-group"
+            *ngFor="let hobbieControl of signupForm.get('hobbies').controls; let i = index">
+            <!-- specify the formControlName in this case we use propery binding to bind the index, which will be the formControlName -->
+            <input type="text" class="form-control" [formControlName]="i">
+          </div>
+        </div>
         <button
           class="btn btn-primary"
           type="submit"

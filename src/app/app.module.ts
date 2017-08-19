@@ -4,12 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { RequiredFieldComponent } from './required-field/required-field.component';
+import { RequiredFieldDirective } from './required-field/required-field.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RequiredFieldComponent
+    RequiredFieldDirective
   ],
   imports: [
     BrowserModule,

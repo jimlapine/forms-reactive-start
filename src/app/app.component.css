@@ -10,3 +10,10 @@
 input.ng-invalid.ng-touched {
   border: 1px solid red;
 }
+
+#requiredField  {
+  font-weight: bold !important;
+  color: red !important;
+}
+
+label.required:before { content: "* "; color: red; }
