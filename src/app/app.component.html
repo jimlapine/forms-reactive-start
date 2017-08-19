@@ -1,25 +1,41 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <!-- Binding the formGroup to our declared from, connects the form we created in TypeScript to out HTML form -->
+      <!-- Binding the formGroup to our declared from, connects the form we created in TypeScript to our HTML form -->
       <form
-        [formGroup]="signupForm">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <!-- We also need to tell Angular which of our TypeScript form controls map to out HTML controls via formControlName -->
-          <input
-            type="text"
-            id="username"
-            formControlName="username"
-            class="form-control">
-        </div>
-        <div class="form-group">
-          <label for="email">email</label>
-          <input
-            type="text"
-            id="email"
-            formControlName="email"
-            class="form-control">
+        [formGroup]="signupForm"
+        (ngSubmit)="onSubmit()">
+        <div
+          formGroupName="userData">
+            <div class="form-group">
+                <!-- Update to use path instead of control name, see nested control on TypeScript -->
+                <app-required-field [formField]="signupForm.get('userData.username')">/</app-required-field>
+                <label for="username">Username</label>
+                <!-- We also need to tell Angular which of our TypeScript form controls map to our HTML controls via formControlName -->
+                <input
+                  type="text"
+                  id="username"
+                  formControlName="username"
+                  class="form-control">
+                <!-- Here we access the controls via the signupForm.get method -->
+                <span
+                  class="help-block error"
+                  *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched">
+                    Please enter a valid user name.</span>
+              </div>
+              <div class="form-group">
+                <app-required-field [formField]="signupForm.get('userData.email')">/</app-required-field>
+                <label for="email">email</label>
+                <input
+                  type="text"
+                  id="email"
+                  formControlName="email"
+                  class="form-control">
+                <span
+                  class="help-block error"
+                  *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched">
+                    Please enter a valid user name.</span>
+              </div>
         </div>
         <div class="radio" *ngFor="let gender of genders">
           <label>
@@ -29,7 +45,19 @@
               [value]="gender">{{ gender }}
           </label>
         </div>
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <!-- <span
+          class="help-block error"
+          *ngIf="!signupForm.valid && signupForm.touched">
+          Please enter required fields.</span> -->
+        <!-- <button
+          class="btn btn-primary"
+          type="submit">
+            Submit</button> -->
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!signupForm.valid">
+            Submit</button>
       </form>
     </div>
   </div>

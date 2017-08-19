@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -16,9 +16,18 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // Max suggests wrapping control names in quotes, so it doest not get mangled during minifiaction
     this.signupForm = new FormGroup({
-      'username' : new FormControl(null),
-      'email' : new FormControl(null),
+      // We can also nest Form Groups
+      'userData': new FormGroup({
+        // Add require validator, angular will execute this method
+        'username' : new FormControl(null, Validators.required),
+        // When can also add an array of validators
+        'email' : new FormControl(null, [Validators.required, Validators.email]),
+      }),
       'gender' : new FormControl('male'),
     });
+  }
+
+  onSubmit() {
+    console.log(this.signupForm);
   }
 }
